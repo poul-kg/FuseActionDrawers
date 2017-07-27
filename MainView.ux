@@ -1,0 +1,68 @@
+<App>
+	<JavaScript>
+	var Observable = require('FuseJS/Observable');
+	var height = Observable(0);
+	var isShowDrawer = Observable(false);
+	module.exports = {
+		height: height,
+		isShowDrawer: isShowDrawer,
+		showDrawer: function () {
+			height.value = 300;
+			isShowDrawer.value = true;
+		},
+		hideDrawer: function () {
+			height.value = 0;
+			isShowDrawer.value = false;
+		},
+		toggleDrawer: function () {
+			isShowDrawer.value = !isShowDrawer.value;
+			height.value = isShowDrawer.value ? 300 : 0;
+		}
+	}
+	</JavaScript>
+	<DockPanel>
+		<!-- Messages -->
+		<ScrollView>
+			<StackPanel>
+				<Rectangle Width="300" Height="32" Color="#ccc" CornerRadius="10" Margin="10" Alignment="Left" ux:Class="ServerMsg"/>
+				<Rectangle Width="300" Height="32" Color="#eee" CornerRadius="10" Alignment="Right" Margin="10" ux:Class="ClientMsg" />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+				<ServerMsg />
+				<ClientMsg />
+			</StackPanel>
+		</ScrollView>
+
+		<!-- Action Drawer -->
+		<DockPanel Background="#C6C6C5" Dock="Bottom" Height="0" ux:Name="Drawer">
+			<Rectangle Width="100" Height="10" CornerRadius="5" Color="#4D4D4C" Dock="Top" Margin="10"/>
+			<WhileTrue Value="{isShowDrawer}">
+				<Change Target="Drawer.Height" Value="300" Duration=".5" Easing="ElasticOut" EasingBack="Linear" />
+			</WhileTrue>
+			<WhileFalse Value="{isShowDrawer}">
+				<Change Target="Drawer.Height" Value="0" Duration=".3"/>
+			</WhileFalse>
+		</DockPanel>
+
+		<!-- Bottom Toolbar -->
+		<StackPanel Orientation="Horizontal" Dock="Bottom" ContentAlignment="HorizontalCenter" Background="#eee">
+			<Panel Width="32" Height="32" Margin="10" ux:Class="BarBtn">
+				<Rectangle Layer="Background" Color="#C9C9C8" CornerRadius="100" />
+			</Panel>
+			<BarBtn Clicked="{toggleDrawer}"/>
+			<BarBtn Clicked="{toggleDrawer}"/>
+			<BarBtn Clicked="{toggleDrawer}"/>
+		</StackPanel>
+		
+	</DockPanel>
+</App>
